@@ -1411,11 +1411,11 @@ class Contact_Form_Plugin {
 	 * @param object $screen Information about the current screen.
 	 */
 	public function unread_count( $screen ) {
-		if ( isset( $screen->post_type ) && 'feedback' === $screen->post_type || $screen->id === 'jetpack_page_jetpack-forms-admin' ) {
+		if ( $screen->id === 'jetpack_page_jetpack-forms-admin' ) {
 			update_option( 'feedback_unread_count', 0 );
 		} else {
 			global $submenu, $menu;
-			if ( apply_filters( 'jetpack_forms_use_new_menu_parent', true ) && current_user_can( 'edit_pages' ) ) {
+			if ( current_user_can( 'edit_pages' ) ) {
 				// show the count on Jetpack and Jetpack → Forms
 				$unread = get_option( 'feedback_unread_count', 0 );
 
@@ -1453,20 +1453,6 @@ class Contact_Form_Plugin {
 					}
 				}
 				return;
-			}
-			if ( isset( $submenu['feedback'] ) && is_array( $submenu['feedback'] ) && ! empty( $submenu['feedback'] ) ) {
-				foreach ( $submenu['feedback'] as $index => $menu_item ) {
-					if ( 'edit.php?post_type=feedback' === $menu_item[2] ) {
-						$unread = get_option( 'feedback_unread_count', 0 );
-						if ( $unread > 0 ) {
-							$unread_count = current_user_can( 'publish_pages' ) ? " <span class='feedback-unread count-{$unread} awaiting-mod'><span class='feedback-unread-count'>" . number_format_i18n( $unread ) . '</span></span>' : '';
-
-							// phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
-							$submenu['feedback'][ $index ][0] .= $unread_count;
-						}
-						break;
-					}
-				}
 			}
 		}
 	}

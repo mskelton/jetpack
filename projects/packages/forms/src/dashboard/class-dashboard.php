@@ -171,10 +171,6 @@ class Dashboard {
 	 * Register the NEW dashboard admin submenu Forms under Jetpack menu.
 	 */
 	public function add_new_admin_submenu() {
-		if ( ! $this->switch->is_jetpack_forms_admin_page_available() ) {
-			return;
-		}
-
 		Admin_Menu::add_menu(
 			/** "Jetpack Forms" and "Forms" are Product names, do not translate. */
 			'Jetpack Forms',
