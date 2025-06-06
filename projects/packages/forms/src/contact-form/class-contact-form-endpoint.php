@@ -985,10 +985,9 @@ class Contact_Form_Endpoint extends \WP_REST_Posts_Controller {
 		// Override base shape for specific plugins.
 		switch ( $plugin_slug ) {
 			case 'akismet':
-				$dashboard_view_switch                       = new Dashboard_View_Switch();
-				$status['isConnected']                       = class_exists( 'Jetpack' ) && \Jetpack::is_akismet_active();
-				$status['details']['formSubmissionsSpamUrl'] = $dashboard_view_switch->get_forms_admin_url( 'spam' );
-				$status['needsConnection']                   = true;
+				$response['isConnected']                       = class_exists( 'Jetpack' ) && \Jetpack::is_akismet_active();
+				$response['details']['formSubmissionsSpamUrl'] = Dashboard_View_Switch::get_forms_admin_url( 'spam' );
+				$response['needsConnection']                   = true;
 				break;
 			case 'zero-bs-crm':
 				if ( $is_active ) {

@@ -504,7 +504,7 @@ class Contact_Form extends Contact_Form_Shortcode {
 			return;
 		}
 
-		$url = ( new Dashboard_View_Switch() )->get_forms_admin_url();
+		$url = Dashboard_View_Switch::get_forms_admin_url();
 
 		$admin_bar->add_menu(
 			array(
