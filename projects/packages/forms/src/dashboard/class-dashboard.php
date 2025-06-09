@@ -120,22 +120,6 @@ class Dashboard {
 			return;
 		}
 
-		if ( $this->switch->get_preferred_view() === Dashboard_View_Switch::CLASSIC_VIEW ) {
-			// We still need to register the jetpack forms page so it can be accessed manually.
-			// NOTE: adding submenu this (parent = '') way DOESN'T SHOW ANYWHERE,
-			// it's done just so the page URL doesn't break.
-			add_submenu_page(
-				'',
-				__( 'Form Responses', 'jetpack-forms' ),
-				_x( 'Form Responses', 'menu label for form responses', 'jetpack-forms' ),
-				'edit_pages',
-				'jetpack-forms',
-				array( $this, 'render_dashboard' )
-			);
-
-			return;
-		}
-
 		$is_wpcom = ( new Host() )->is_wpcom_simple();
 
 		// MODERN VIEW -- remove the old submenu and add the new one.
