@@ -1974,18 +1974,16 @@ class Contact_Form extends Contact_Form_Shortcode {
 		// Get the status of the feedback
 		$status = $is_spam ? 'spam' : 'inbox';
 
-		// Build the dashboard URL with the status and the feedback's post id if we have a post id
-		$dashboard_url           = '';
-		$footer_mark_as_spam_url = '';
-		if ( $feedback_status !== 'jp-temp-feedback' ) {
-			$dashboard_url           = ( new Dashboard_View_Switch() )->get_forms_admin_url( $status, true ) . '&r=' . $post_id;
-			$mark_as_spam_url        = $dashboard_url . '&mark_as_spam';
-			$footer_mark_as_spam_url = sprintf(
-				'<a href="%1$s">%2$s</a>',
-				esc_url( $mark_as_spam_url ),
-				__( 'Mark as spam', 'jetpack-forms' )
-			);
-		}
+		// Build the dashboard URL with the status and the feedback's post id
+		$dashboard_url = Dashboard_View_Switch::get_forms_admin_url( $status ) . '&r=' . $post_id;
+
+		$mark_as_spam_url = $dashboard_url . '&mark_as_spam';
+
+		$footer_mark_as_spam_url = sprintf(
+			'<a href="%1$s">%2$s</a>',
+			esc_url( $mark_as_spam_url ),
+			__( 'Mark as spam', 'jetpack-forms' )
+		);
 
 		$footer = implode(
 			'',

@@ -42,7 +42,7 @@ class Dashboard_View_Switch {
 	public static function get_forms_admin_url( $tab = null ) {
 		$base_url = get_admin_url() . 'admin.php?page=jetpack-forms-admin';
 
-		return self::append_tab_to_url( $base_url, $tab, false );
+		return self::append_tab_to_url( $base_url, $tab );
 	}
 
 	/**
