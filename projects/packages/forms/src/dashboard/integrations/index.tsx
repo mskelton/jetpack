@@ -11,6 +11,7 @@ import { useIntegrationsStatus } from '../../blocks/contact-form/components/jetp
 import AkismetDashboardCard from './akismet-card';
 import CreativeMailDashboardCard from './creative-mail-card';
 import GoogleSheetsDashboardCard from './google-sheets-card';
+import HostingerReachDashboardCard from './hostinger-reach-card';
 import JetpackCRMDashboardCard from './jetpack-crm-card';
 import MailPoetDashboardCard from './mailpoet-card';
 import SalesforceDashboardCard from './salesforce-card';
@@ -29,6 +30,7 @@ const Integrations = () => {
 		creativemail: false,
 		salesforce: false,
 		mailpoet: false,
+		hostingerReach: false,
 	} );
 
 	const toggleCard = useCallback( ( cardId: keyof typeof expandedCards ) => {
@@ -61,6 +63,10 @@ const Integrations = () => {
 		[ toggleCard ]
 	);
 	const handleToggleMailPoet = useCallback( () => toggleCard( 'mailpoet' ), [ toggleCard ] );
+	const handleToggleHostingerReach = useCallback(
+		() => toggleCard( 'hostingerReach' ),
+		[ toggleCard ]
+	);
 
 	const findIntegrationById = ( id: string ) =>
 		integrations?.find( ( integration: Integration ) => integration.id === id );
@@ -72,6 +78,7 @@ const Integrations = () => {
 	const mailpoetData = findIntegrationById( 'mailpoet' );
 	const salesforceData = findIntegrationById( 'salesforce' );
 	const creativeMailData = findIntegrationById( 'creative-mail-by-constant-contact' );
+	const hostingerReachData = findIntegrationById( 'hostinger-reach' );
 
 	return (
 		<div className="jp-forms__integrations">
@@ -135,6 +142,14 @@ const Integrations = () => {
 							data={ creativeMailData }
 							refreshStatus={ refreshIntegrations }
 							borderBottom={ false }
+						/>
+					) }
+					{ hostingerReachData && (
+						<HostingerReachDashboardCard
+							isExpanded={ expandedCards.hostingerReach }
+							onToggle={ handleToggleHostingerReach }
+							data={ hostingerReachData }
+							refreshStatus={ refreshIntegrations }
 						/>
 					) }
 				</div>
