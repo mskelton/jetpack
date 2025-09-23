@@ -23,7 +23,7 @@ class Dashboard_View_Switch {
 	 *
 	 * @return boolean
 	 */
-	public function is_jetpack_forms_admin_page() {
+	public static function is_jetpack_forms_admin_page() {
 		if ( ! function_exists( 'get_current_screen' ) ) {
 			return false;
 		}

@@ -50,14 +50,6 @@ class Dashboard {
 	private $switch;
 
 	/**
-	 * Creates a new Dashboard instance.
-	 */
-	public function __construct() {
-		// Set the integrations tab feature flag
-		self::$show_integrations = apply_filters( 'jetpack_forms_enable_integrations_tab', true );
-	}
-
-	/**
 	 * Initialize the dashboard.
 	 */
 	public function init() {
@@ -197,7 +189,6 @@ class Dashboard {
 			'hasFeedback'             => $this->has_feedback(),
 			'hasAI'                   => $has_ai,
 			'isMailpoetEnabled'       => Jetpack_Forms::is_mailpoet_enabled(),
-			'enableIntegrationsTab'   => self::$show_integrations,
 			'renderMigrationPage'     => Dashboard_View_Switch::is_jetpack_forms_announcing_new_menu(),
 			'dashboardURL'            => Dashboard_View_Switch::get_forms_admin_url(),
 		);

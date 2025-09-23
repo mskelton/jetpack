@@ -985,9 +985,9 @@ class Contact_Form_Endpoint extends \WP_REST_Posts_Controller {
 		// Override base shape for specific plugins.
 		switch ( $plugin_slug ) {
 			case 'akismet':
-				$response['isConnected']                       = class_exists( 'Jetpack' ) && \Jetpack::is_akismet_active();
-				$response['details']['formSubmissionsSpamUrl'] = Dashboard_View_Switch::get_forms_admin_url( 'spam' );
-				$response['needsConnection']                   = true;
+				$status['isConnected']                       = class_exists( 'Jetpack' ) && \Jetpack::is_akismet_active();
+				$status['details']['formSubmissionsSpamUrl'] = Dashboard_View_Switch::get_forms_admin_url( 'spam' );
+				$status['needsConnection']                   = true;
 				break;
 			case 'zero-bs-crm':
 				if ( $is_active ) {
@@ -1041,7 +1041,6 @@ class Contact_Form_Endpoint extends \WP_REST_Posts_Controller {
 	 * @return WP_REST_Response
 	 */
 	public function get_forms_config( WP_REST_Request $request ) { // phpcs:ignore VariableAnalysis.CodeAnalysis.VariableAnalysis.UnusedVariable
-		$switch = new Dashboard_View_Switch();
 		$has_ai = false;
 		if ( class_exists( 'Jetpack_AI_Helper' ) ) {
 			$feature = Jetpack_AI_Helper::get_ai_assistance_feature();
@@ -1050,8 +1049,7 @@ class Contact_Form_Endpoint extends \WP_REST_Posts_Controller {
 
 		$config = array(
 			// From jpFormsBlocks in class-contact-form-block.php.
-			'formsResponsesUrl'       => $switch->get_forms_admin_url(),
-			'preferredView'           => $switch->get_preferred_view(),
+			'formsResponsesUrl'       => Dashboard_View_Switch::get_forms_admin_url(),
 			'isMailPoetEnabled'       => Jetpack_Forms::is_mailpoet_enabled(),
 			// From config in class-dashboard.php.
 			'blogId'                  => get_current_blog_id(),
@@ -1061,8 +1059,8 @@ class Contact_Form_Endpoint extends \WP_REST_Posts_Controller {
 			'hasFeedback'             => ( new Forms_Dashboard() )->has_feedback(),
 			'hasAI'                   => $has_ai,
 			'isIntegrationsEnabled'   => Jetpack_Forms::is_integrations_enabled(),
-			'renderMigrationPage'     => $switch->is_jetpack_forms_announcing_new_menu(),
-			'dashboardURL'            => add_query_arg( 'jetpack_forms_migration_announcement_seen', 'yes', $switch->get_forms_admin_url() ),
+			'renderMigrationPage'     => Dashboard_View_Switch::is_jetpack_forms_announcing_new_menu(),
+			'dashboardURL'            => add_query_arg( 'jetpack_forms_migration_announcement_seen', 'yes', Dashboard_View_Switch::get_forms_admin_url() ),
 			// New data.
 			'canInstallPlugins'       => current_user_can( 'install_plugins' ),
 			'canActivatePlugins'      => current_user_can( 'activate_plugins' ),
