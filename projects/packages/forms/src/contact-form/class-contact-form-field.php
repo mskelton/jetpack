@@ -1034,7 +1034,6 @@ class Contact_Form_Field extends Contact_Form_Shortcode {
 			class="jetpack-field__input-phone-wrapper <?php echo esc_attr( $this->get_attribute( 'stylevariationclasses' ) ); ?> <?php echo esc_attr( $class_names ); ?>"
 			style="<?php echo ( ! empty( $this->field_styles ) && is_string( $this->field_styles ) ? esc_attr( $this->field_styles ) : '' ); ?>"
 			data-wp-on--jetpack-form-reset='actions.phoneResetHandler'
-			data-wp-init="callbacks.initializePhoneField"
 			data-wp-class--is-combobox-open="context.comboboxOpen"
 			<?php
 			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- function is supposed to work this way
@@ -1061,7 +1060,6 @@ class Contact_Form_Field extends Contact_Form_Shortcode {
 			>
 				<div class="jetpack-field__input-prefix"
 					data-wp-bind--hidden="!context.showCountrySelector"
-					data-wp-init="callbacks.initializePhoneFieldCustomComboBox"
 					data-wp-on-document--click="actions.phoneComboboxDocumentClickHandler">
 					<div class="jetpack-custom-combobox">
 
@@ -1093,8 +1091,9 @@ class Contact_Form_Field extends Contact_Form_Shortcode {
 								type="text"
 								placeholder="<?php echo esc_attr( $search_placeholder ); ?>"
 								data-wp-on--input="actions.phoneComboboxInputHandler"
-								data-wp-on--keydown="actions.phoneComboboxKeydownHandler">
-							<div class="jetpack-combobox-options">
+								data-wp-on--keydown="actions.phoneComboboxKeydownHandler"
+								data-wp-init="callbacks.registerPhoneComboboxSearchInput">
+							<div class="jetpack-combobox-options" data-wp-init="callbacks.registerPhoneComboboxOptionsList">
 								<template
 									data-wp-each--filtered="context.filteredCountries"
 									data-wp-each-key="context.filtered.code">
@@ -1131,6 +1130,8 @@ class Contact_Form_Field extends Contact_Form_Shortcode {
 					data-wp-on--blur='actions.onFieldBlur'
 					data-wp-on--focus='actions.phoneNumberFocusHandler'
 					data-wp-class--has-value='context.phoneNumber'
+					data-wp-init="callbacks.registerPhoneInput"
+					data-wp-init--phone-field-custom-combobox="callbacks.initializePhoneFieldCustomComboBox"
 					/>
 				<input type="hidden"
 					id="<?php echo esc_attr( $id ); ?>"
