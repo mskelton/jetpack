@@ -1,4 +1,11 @@
-import { store, getContext, getConfig, getElement, withSyncEvent } from '@wordpress/interactivity';
+import {
+	store,
+	getContext,
+	getConfig,
+	getElement,
+	withSyncEvent,
+	withScope,
+} from '@wordpress/interactivity';
 import parsePhoneNumber, { AsYouType } from 'libphonenumber-js';
 import { countries } from '../../blocks/field-telephone/country-list';
 import { isEmptyValue } from '../../contact-form/js/validate-helper';
@@ -24,7 +31,7 @@ const updateSelection = selectedCountry => {
 	} ) );
 };
 
-const { actions } = store( NAMESPACE, {
+const { actions, callbacks } = store( NAMESPACE, {
 	state: {
 		validators: {
 			phone: ( value, isRequired ) => {
@@ -221,6 +228,30 @@ const { actions } = store( NAMESPACE, {
 		initializePhoneFieldCustomComboBox() {
 			const context = getContext();
 			if ( ! context.showCountrySelector ) {
+				return;
+			}
+
+			if (
+				! phoneInputRefs[ context.fieldId ] ||
+				! searchInputRefs[ context.fieldId ] ||
+				! optionsListRefs[ context.fieldId ]
+			) {
+				const { ref } = getElement();
+				// delay execution with a timeout and scoping withScope and return.
+				setTimeout(
+					withScope( function () {
+						const context2 = getContext();
+						phoneInputRefs[ context2.fieldId ] = ref;
+						searchInputRefs[ context2.fieldId ] = ref.parentElement.querySelector(
+							'.jetpack-combobox-search'
+						);
+						optionsListRefs[ context2.fieldId ] = ref.parentElement.querySelector(
+							'.jetpack-combobox-options'
+						);
+						callbacks.initializePhoneFieldCustomComboBox();
+					} ),
+					100
+				);
 				return;
 			}
 			const config = getConfig( 'jetpack/field-phone' );
