@@ -84,8 +84,8 @@ class Dashboard {
 
 		// Preload Forms endpoints needed in dashboard context.
 		$preload_paths = array(
-			'/wp/v2/feedback/config',
-			'/wp/v2/feedback/integrations?version=2',
+			'/wp/v2/feedback/config?_fields=sync',
+			'/wp/v2/feedback/integrations?version=2&_fields=sync',
 		);
 		$preload_data  = array_reduce( $preload_paths, 'rest_preload_api_request', array() );
 		wp_add_inline_script(
