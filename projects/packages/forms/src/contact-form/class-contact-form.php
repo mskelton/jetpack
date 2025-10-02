@@ -181,6 +181,7 @@ class Contact_Form extends Contact_Form_Shortcode {
 			'customThankyouRedirect' => '', // The URL to redirect to when customThankyou is set to 'redirect'.
 			'jetpackCRM'             => true, // Whether Jetpack CRM should store the form submission.
 			'mailpoet'               => null,
+			'hostingerReach'         => null,
 			'className'              => null,
 			'postToUrl'              => null,
 			'salesforceData'         => null,
