@@ -120,7 +120,7 @@ export default function InboxView() {
 		totalPages,
 	} = useInboxData();
 
-	useEffect( () => {
+	const queryArgs = useMemo( () => {
 		const _filters = view.filters?.reduce( ( accumulator, { field, value } ) => {
 			if ( ! value ) {
 				return accumulator;
@@ -135,17 +135,18 @@ export default function InboxView() {
 			}
 			return accumulator;
 		}, {} );
-		const _queryArgs = {
+		return {
 			per_page: view.perPage,
 			page: view.page,
 			search: view.search,
 			..._filters,
 			status: statusFilter,
 		};
-		// We need to keep the current query args in the store to be used in `export`
-		// and for getting the total records per `status`.
-		setCurrentQuery( _queryArgs );
-	}, [ view, statusFilter, setCurrentQuery ] );
+	}, [ view.perPage, view.page, view.search, view.filters, statusFilter ] );
+
+	useEffect( () => {
+		setCurrentQuery( queryArgs );
+	}, [ queryArgs, setCurrentQuery ] );
 	const data = useMemo(
 		() =>
 			records?.map( record => ( {
