@@ -70,7 +70,7 @@ export default function useInboxData(): UseInboxDataReturn {
 
 	const {
 		records: rawRecords,
-		isResolving: isLoadingRecordsData,
+		hasResolved,
 		totalItems,
 		totalPages,
 	} = useEntityRecords( 'postType', 'feedback', currentQuery );
@@ -116,13 +116,18 @@ export default function useInboxData(): UseInboxDataReturn {
 		}
 	);
 
+	const isLoadingData =
+		( ! rawRecords?.length && ! hasResolved ) ||
+		isLoadingInboxData ||
+		isLoadingSpamData ||
+		isLoadingTrashData;
+
 	return {
 		totalItemsInbox,
 		totalItemsSpam,
 		totalItemsTrash,
 		records,
-		isLoadingData:
-			isLoadingRecordsData || isLoadingInboxData || isLoadingSpamData || isLoadingTrashData,
+		isLoadingData,
 		totalItems,
 		totalPages,
 		selectedResponsesCount,
